@@ -51,7 +51,6 @@
     .nav-card-links { display: flex; flex-direction: column; gap: 12px; }
     .nav-card-link { color: inherit; text-decoration: none; font-size: 14px; opacity: 0.85; display: flex; align-items: center; gap: 8px; transition: all 0.2s ease; }
     .nav-card-link:hover { opacity: 1; transform: translateX(5px); }
-    @media (max-width: 768px) { .card-nav-content { grid-template-columns: 1fr; } }
 
     /* =========================================
        BACKGROUND WEBGL CONTAINER
@@ -64,9 +63,6 @@
     .hero-section { width: 100%; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; position: relative; z-index: 1; }
     .hero-section h1 { font-size: min(6vw, 4rem); font-weight: 700; margin-bottom: 10px; background: linear-gradient(to right, #ffffff, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0px 4px 20px rgba(192, 132, 252, 0.3); }
     .hero-section p.subtitle { font-size: min(4vw, 1.5rem); color: #e2e8f0; margin-bottom: 30px; max-width: 600px; line-height: 1.6; }
-    .scroll-indicator { position: absolute; bottom: 40px; display: flex; flex-direction: column; align-items: center; gap: 10px; color: #cbd5e1; font-size: 14px; animation: bounce 2s infinite; }
-    .scroll-indicator span { display: block; width: 2px; height: 30px; background: linear-gradient(to bottom, #cbd5e1, transparent); }
-    @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
 
     /* =========================================
        BAGIAN LANYARD STRAP & SWING ANIMATION
@@ -81,9 +77,7 @@
     .lanyard-clip { width: 30px; height: 45px; background: linear-gradient(to bottom, #e2e8f0, #64748b); border-radius: 6px; margin-top: 10px; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.5); position: relative; }
     .clip-hole { position: absolute; top: -25px; left: 50%; transform: translateX(-50%); width: 45px; height: 8px; background: #000; border-radius: 10px; z-index: 11; }
 
-    /* =========================================
-       BAGIAN CSS 3D HOLOGRAPHIC (LANYARD CARD)
-       ========================================= */
+    /* CSS 3D HOLOGRAPHIC (LANYARD CARD) */
     :root {
       --pointer-x: 50%; --pointer-y: 50%; --pointer-from-center: 0; --pointer-from-top: 0.5; --pointer-from-left: 0.5;
       --card-opacity: 0; --rotate-x: 0deg; --rotate-y: 0deg; --background-x: 50%; --background-y: 50%;
@@ -177,20 +171,122 @@
     .morph-slider-stage { width: 100%; height: 100%; cursor: grab; }
     .morph-slider-stage:active { cursor: grabbing; }
     .morph-slider-canvas { display: block; width: 100%; height: 100%; outline: none; }
-    
     .morph-slider-caption { position: absolute; bottom: 40px; left: 40px; color: #fff; font-size: 24px; font-weight: 600; text-shadow: 0 2px 10px rgba(0,0,0,0.8); z-index: 10; pointer-events: none; }
     .morph-slider-caption-text { display: none; }
     .morph-slider-caption-text.is-active { display: block; animation: fadeInCaption 0.5s; }
-    
     .morph-slider-controls { position: absolute; inset: 0; pointer-events: none; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; z-index: 10; }
     .morph-slider-btn { pointer-events: auto; width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: #fff; cursor: pointer; backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; transition: 0.3s; }
     .morph-slider-btn:hover { background: rgba(255,255,255,0.3); transform: scale(1.1); }
-    
     .morph-slider-indicators { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; }
     .morph-slider-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.3); border: none; cursor: pointer; transition: 0.3s; }
     .morph-slider-dot.is-active { background: #fff; transform: scale(1.2); }
-    
     @keyframes fadeInCaption { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* =========================================
+       BAGIAN FOLDER INTERACTIVE 
+       ========================================= */
+    .folder-section { width: 100%; min-height: 100vh; position: relative; z-index: 1; padding: 80px 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .folder-container { --folder-color: #5227FF; --folder-back-color: #3b17cc; --paper-1: #e6e6e6; --paper-2: #f2f2f2; --paper-3: #ffffff; transform: scale(1); margin-top: 150px; }
+    .folder { position: relative; width: 250px; height: 170px; perspective: 800px; cursor: pointer; transition: transform 0.3s; }
+    .folder:hover { transform: translateY(-5px); }
+    .folder__back { position: absolute; width: 100%; height: 100%; background-color: var(--folder-back-color); border-radius: 10px 10px 15px 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+    .folder__back::before { content: ''; position: absolute; top: -15px; left: 0; width: 90px; height: 25px; background-color: var(--folder-back-color); border-radius: 10px 10px 0 0; }
+    .folder__front { position: absolute; bottom: 0; left: 0; width: 100%; height: 85%; background-color: var(--folder-color); border-radius: 5px 15px 15px 15px; transform-origin: bottom; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 10; }
+    .folder.open .folder__front { transform: rotateX(-45deg); }
+    .paper { position: absolute; bottom: 10px; left: 50%; width: 90%; height: 110%; background-color: #fff; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transform: translateX(-50%) translateY(0); transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+    .paper img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+    .paper-1 { background-color: var(--paper-1); z-index: 1; } .paper-2 { background-color: var(--paper-2); z-index: 2; } .paper-3 { background-color: var(--paper-3); z-index: 3; }
+    .folder.open .paper-1 { transform: translate(calc(-50% + var(--magnet-x, 0px)), calc(-40px + var(--magnet-y, 0px))) rotate(-8deg); }
+    .folder.open .paper-2 { transform: translate(calc(-50% + var(--magnet-x, 0px)), calc(-60px + var(--magnet-y, 0px))) rotate(4deg); }
+    .folder.open .paper-3 { transform: translate(calc(-50% + var(--magnet-x, 0px)), calc(-80px + var(--magnet-y, 0px))) rotate(0deg); }
+
+    /* =========================================
+       BAGIAN CARD SWAP (TUMPUKAN KARTU 3D)
+       ========================================= */
+    .card-swap-section { width: 100%; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; z-index: 1; padding: 40px 20px; }
+    .card-swap-container { position: relative; perspective: 1000px; transform-style: preserve-3d; cursor: pointer; }
+    .swap-card { position: absolute; left: 50%; top: 50%; border-radius: 20px; overflow: hidden; background: #fff; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
+    .swap-card img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+    .swap-card-content { position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: #fff; }
+    .swap-card-content h3 { font-size: 20px; font-weight: 700; margin-bottom: 5px; }
+    .swap-card-content p { font-size: 13px; color: #cbd5e1; }
+
+    /* =========================================
+       BAGIAN FOOTER DENGAN BORDER GLOW
+       ========================================= */
+    .footer-section {
+      width: 100%; min-height: 60vh; position: relative; z-index: 1; padding: 60px 20px;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+    }
+    
+    .border-glow-card {
+      --edge-proximity: 0; --cursor-angle: 0deg; --card-bg: #120F17; --edge-sensitivity: 30; --border-radius: 28px;
+      --glow-padding: 40px; --cone-spread: 25; --fill-opacity: 0.5;
+      /* Warna HSL Kuning Emas Custom */
+      --glow-color: hsl(40deg 80% 80% / 100%); --glow-color-60: hsl(40deg 80% 80% / 60%);
+      --glow-color-50: hsl(40deg 80% 80% / 50%); --glow-color-40: hsl(40deg 80% 80% / 40%);
+      --glow-color-30: hsl(40deg 80% 80% / 30%); --glow-color-20: hsl(40deg 80% 80% / 20%);
+      --glow-color-10: hsl(40deg 80% 80% / 10%);
+      /* Warna Gradient Mesh */
+      --gradient-base: linear-gradient(#c084fc 0 100%);
+      --gradient-one: radial-gradient(at 80% 55%, #c084fc 0px, transparent 50%);
+      --gradient-two: radial-gradient(at 69% 34%, #f472b6 0px, transparent 50%);
+      --gradient-three: radial-gradient(at 8% 6%, #38bdf8 0px, transparent 50%);
+      --gradient-four: radial-gradient(at 41% 38%, #c084fc 0px, transparent 50%);
+      --gradient-five: radial-gradient(at 86% 85%, #f472b6 0px, transparent 50%);
+      --gradient-six: radial-gradient(at 82% 18%, #38bdf8 0px, transparent 50%);
+      --gradient-seven: radial-gradient(at 51% 4%, #f472b6 0px, transparent 50%);
+
+      position: relative; padding: 1px; border-radius: calc(var(--border-radius) + 1px);
+      background: var(--card-bg); max-width: 800px; width: 100%; text-align: center;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    }
+
+    /* Ini kilauan yang ikutin mouse */
+    .edge-light {
+      position: absolute; inset: 0; border-radius: inherit; z-index: 1; pointer-events: none; overflow: hidden;
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite: exclude; -webkit-mask-composite: xor;
+      padding: 1px;
+    }
+    .edge-light::before {
+      content: ''; position: absolute; inset: calc(-1 * var(--glow-padding));
+      background: conic-gradient(from var(--cursor-angle) at 50% 50%, transparent 0deg, 
+        var(--glow-color-10) calc(var(--cone-spread) * 1deg), 
+        var(--glow-color-20) calc(var(--cone-spread) * 1.5deg), 
+        var(--glow-color-30) calc(var(--cone-spread) * 1.8deg), 
+        var(--glow-color-40) calc(var(--cone-spread) * 2deg), 
+        var(--glow-color-50) calc(var(--cone-spread) * 2.2deg), 
+        var(--glow-color-60) calc(var(--cone-spread) * 2.4deg), 
+        var(--glow-color) calc(var(--cone-spread) * 2.5deg), 
+        var(--glow-color-60) calc(var(--cone-spread) * 2.6deg), 
+        var(--glow-color-50) calc(var(--cone-spread) * 2.8deg), 
+        var(--glow-color-40) calc(var(--cone-spread) * 3deg), 
+        var(--glow-color-30) calc(var(--cone-spread) * 3.2deg), 
+        var(--glow-color-20) calc(var(--cone-spread) * 3.5deg), 
+        var(--glow-color-10) calc(var(--cone-spread) * 4deg), transparent calc(var(--cone-spread) * 5deg)
+      );
+      opacity: calc(var(--edge-proximity) / 100); transition: opacity 0.1s;
+    }
+
+    /* Warna gradien di dalam kartu jika kursor mendekat */
+    .border-glow-inner {
+      position: relative; z-index: 2; border-radius: var(--border-radius); background: var(--card-bg);
+      padding: 60px 40px; overflow: hidden;
+    }
+    .border-glow-inner::before {
+      content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
+      background-image: var(--gradient-one), var(--gradient-two), var(--gradient-three), var(--gradient-four), var(--gradient-five), var(--gradient-six), var(--gradient-seven), var(--gradient-base);
+      opacity: calc((var(--edge-proximity) / 100) * var(--fill-opacity)); transition: opacity 0.3s;
+    }
+
+    /* Konten Footer */
+    .footer-content h2 { font-size: 32px; font-weight: 700; margin-bottom: 15px; color: #fff; }
+    .footer-content p { font-size: 15px; color: #94a3b8; line-height: 1.8; margin-bottom: 30px; }
+    .footer-socials { display: flex; justify-content: center; gap: 20px; }
+    .footer-socials a { color: #fff; text-decoration: none; font-weight: 500; font-size: 14px; padding: 10px 20px; border-radius: 50px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); transition: 0.3s; }
+    .footer-socials a:hover { background: rgba(255,255,255,0.2); transform: translateY(-3px); }
 
   </style>
 </head>
@@ -206,8 +302,6 @@
           <div class="hamburger-line"></div>
         </div>
         <div class="logo-container">Portofolio</div>
-        
-        <!-- TOMBOL SPECULAR BUTTON -->
         <button type="button" id="specular-btn" class="specular-button" style="--sb-radius: 50px;">
           <span id="specular-fx" class="specular-button__fx" aria-hidden="true"></span>
           <span class="specular-button__label">Get Started</span>
@@ -370,9 +464,7 @@
       <h2>Galeri Portofolio</h2>
       <p>Karya fotografi dan desain UI/UX.</p>
     </div>
-    <div class="masonry-container" id="masonry-container">
-      <!-- Item Masonry akan di-inject lewat JavaScript -->
-    </div>
+    <div class="masonry-container" id="masonry-container"></div>
   </section>
 
   <!-- Section 6: Morph Slider -->
@@ -385,7 +477,6 @@
       <div class="morph-slider" id="morph-slider">
         <div id="morph-stage" class="morph-slider-stage"></div>
         <div class="morph-slider-caption" id="morph-caption"></div>
-        
         <div class="morph-slider-controls">
           <button type="button" id="morph-prev" class="morph-slider-btn">
             <svg viewBox="0 0 24 24" width="24" height="24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -395,6 +486,70 @@
           </button>
         </div>
         <div class="morph-slider-indicators" id="morph-indicators"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 7: Interactive Folder -->
+  <section class="folder-section">
+    <div class="model-header">
+      <h2>Arsip Proyek</h2>
+      <p>Klik folder untuk membuka dan gerakan kursor pada dokumen.</p>
+    </div>
+    <div class="folder-container">
+      <div class="folder" id="interactive-folder" aria-expanded="false" role="button" tabindex="0">
+        <div class="folder__back">
+          <div class="paper paper-1" id="paper-1"><img src="https://files.catbox.moe/contohfoto.jpg" alt="Proyek 1"></div>
+          <div class="paper paper-2" id="paper-2"><img src="https://files.catbox.moe/contohfoto.jpg" alt="Proyek 2"></div>
+          <div class="paper paper-3" id="paper-3"><img src="https://files.catbox.moe/contohfoto.jpg" alt="Proyek 3"></div>
+          <div class="folder__front"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 8: Card Swap (Tumpukan Kartu) -->
+  <section class="card-swap-section">
+    <div class="model-header">
+      <h2>Sorotan Karya Utama</h2>
+      <p>Klik kartu paling depan untuk melihat proyek selanjutnya.</p>
+    </div>
+    <br><br><br><br><br><br><br><br><br>
+    <div class="card-swap-container" id="card-swap-container" style="width: 500px; height: 400px;">
+      <div class="swap-card" style="width: 500px; height: 400px;">
+        <img src="https://files.catbox.moe/contohfoto.jpg" alt="Karya 1">
+        <div class="swap-card-content"><h3>Savetime Studio Web</h3><p>Sistem booking studio foto real-time.</p></div>
+      </div>
+      <div class="swap-card" style="width: 500px; height: 400px;">
+        <img src="https://files.catbox.moe/contohfoto.jpg" alt="Karya 2">
+        <div class="swap-card-content"><h3>Frontend UI Kit</h3><p>Komponen UI modern dengan Tailwind CSS.</p></div>
+      </div>
+      <div class="swap-card" style="width: 500px; height: 400px;">
+        <img src="https://files.catbox.moe/contohfoto.jpg" alt="Karya 3">
+        <div class="swap-card-content"><h3>Street Photography</h3><p>Sudut kota Jakarta dalam lensa portrait.</p></div>
+      </div>
+      <div class="swap-card" style="width: 500px; height: 400px;">
+        <img src="https://files.catbox.moe/contohfoto.jpg" alt="Karya 4">
+        <div class="swap-card-content"><h3>Asset</h3><p>Kumpulan preset editing foto jurnalistik.</p></div>
+      </div>
+    </div>
+  </section>
+  <br><br><br><br><br><br><br><br>
+
+  <!-- Section 9: Footer Border Glow -->
+  <section class="footer-section">
+    <div class="border-glow-card" id="border-glow-footer">
+      <span class="edge-light"></span>
+      <div class="border-glow-inner">
+        <div class="footer-content">
+          <h2>Mari Bekerja Sama!</h2>
+          <p>Tingkatkan pengalaman digital Anda dengan desain antarmuka yang intuitif dan visual yang memukau. <br> Mari diskusikan ide-ide hebat untuk proyek Anda selanjutnya.</p>
+          <div class="footer-socials">
+            <a href="#">Email Me</a>
+            <a href="#">Instagram</a>
+            <a href="#">LinkedIn</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -443,18 +598,12 @@
   <!-- Script 3: OGL WebGL (Waves Background & Specular Button) -->
   <script type="module">
     import { Renderer, Program, Mesh, Triangle, Color } from 'ogl';
-    
-    const hexToRgb = hex => {
-      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-      if (!result) return [1, 1, 1];
-      return [parseInt(result[1], 16) / 255, parseInt(result[2], 16) / 255, parseInt(result[3], 16) / 255];
-    };
+    const hexToRgb = hex => { const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex); if (!result) return [1, 1, 1]; return [parseInt(result[1], 16) / 255, parseInt(result[2], 16) / 255, parseInt(result[3], 16) / 255]; };
 
     // A. GRADIENT WAVES BACKGROUND
     const config = { horizonColor: '#5227FF', waveColor: '#FF9FFC', crestColor: '#FFFFFF', speed: 0.4, amplitude: 2.5, waveScale: 0.6, waveRatio: 0.9, swell: 35, turbulence: 20, tilt: 1.11, zoom: 1.0, height: 5.5, fogDepth: 15, detailSteps: 70.0, brightness: 1.0, opacity: 1.0, parallaxStrength: 0.5, grain: true, grainIntensity: 0.05 };
     const waveVertex = `#version 300 es\nin vec2 position;\nvoid main() { gl_Position = vec4(position, 0.0, 1.0); }`;
-    const waveFragment = `#version 300 es
-    precision highp float; uniform vec2 iResolution; uniform float iTime; uniform float uSpeed; uniform float uAmplitude; uniform float uWaveScale; uniform float uWaveRatio; uniform float uSwell; uniform float uTurbulence; uniform float uTilt; uniform float uZoom; uniform float uHeight; uniform float uFogDepth; uniform float uSteps; uniform float uBrightness; uniform float uOpacity; uniform float uGrain; uniform float uGrainIntensity; uniform vec2 uMouse; uniform float uParallax; uniform vec3 uHorizonColor; uniform vec3 uWaveColor; uniform vec3 uCrestColor; out vec4 fragColor; const float MAX_DIST = 20000.0; float hash21(vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); } float plasma(vec3 r, vec2 freq, vec4 tc) { float mx = r.x + tc.x; mx += uSwell * sin((r.y + mx) / 20.0 + tc.y); float my = r.y - tc.z; my += uTurbulence * cos(r.x / 23.0 + tc.w); return r.z - (sin(mx * freq.x) * uAmplitude + sin(my * freq.y) * uAmplitude + uHeight); } float raymarch(vec3 pos, vec3 dir, vec2 freq, vec4 tc) { float dist = 0.0; for (int i = 0; i < 128; i++) { if (float(i) >= uSteps) break; float dscene = plasma(pos + dist * dir, freq, tc); if (abs(dscene) < 0.1) break; dist += 0.9 * dscene; if (!(abs(dist) < MAX_DIST)) return MAX_DIST; } return dist; } void main() { float T = iTime * uSpeed; vec2 freq = vec2(uWaveScale / 7.0, (uWaveScale * uWaveRatio) / 3.0); vec4 tc = vec4(T / 0.130, T / 0.810, T / 0.200, T / 0.710); float c, s; float vfov = (3.14159 / 2.3) / max(uZoom, 0.05); vec3 cam = vec3(0.0, 0.0, 30.0); vec2 uv = (gl_FragCoord.xy / iResolution.xy) - 0.5; uv.x *= iResolution.x / iResolution.y; uv.y *= -1.0; vec3 dir = vec3(0.0, 0.0, -1.0); float ulen = length(uv); float xrot = vfov * ulen; c = cos(xrot); s = sin(xrot); dir = mat3(1.0, 0.0, 0.0, 0.0, c, -s, 0.0, s, c) * dir; vec2 nuv = ulen > 1e-5 ? uv / ulen : vec2(1.0, 0.0); c = nuv.x; s = nuv.y; dir = mat3(c, -s, 0.0, s, c, 0.0, 0.0, 0.0, 1.0) * dir; c = cos(uTilt); s = sin(uTilt); dir = mat3(c, 0.0, s, 0.0, 1.0, 0.0, -s, 0.0, c) * dir; float yaw = (uMouse.x - 0.5) * uParallax * 0.4; float pitch = (uMouse.y - 0.5) * uParallax * 0.4; c = cos(yaw); s = sin(yaw); dir = mat3(c, 0.0, s, 0.0, 1.0, 0.0, -s, 0.0, c) * dir; c = cos(pitch); s = sin(pitch); dir = mat3(1.0, 0.0, 0.0, 0.0, c, -s, 0.0, s, c) * dir; float dist = raymarch(cam, dir, freq, tc); vec3 pos = cam + dist * dir; float t = clamp(uFogDepth / max(dist, 0.001), 0.0, 1.0); vec3 body = mix(uWaveColor, uCrestColor, clamp(pos.z * 0.08 + 0.5, 0.0, 1.0)); vec3 col = mix(uHorizonColor, body, t); col *= uBrightness; col = clamp(col, 0.0, 1.0); float alpha = clamp(t, 0.0, 1.0) * uOpacity; if (uGrain > 0.5) { float g = hash21(gl_FragCoord.xy + mod(iTime, 64.0) * 11.0); alpha += (g - 0.5) * uGrainIntensity; } fragColor = vec4(col * alpha, clamp(alpha, 0.0, 1.0)); }`;
+    const waveFragment = `#version 300 es\nprecision highp float; uniform vec2 iResolution; uniform float iTime; uniform float uSpeed; uniform float uAmplitude; uniform float uWaveScale; uniform float uWaveRatio; uniform float uSwell; uniform float uTurbulence; uniform float uTilt; uniform float uZoom; uniform float uHeight; uniform float uFogDepth; uniform float uSteps; uniform float uBrightness; uniform float uOpacity; uniform float uGrain; uniform float uGrainIntensity; uniform vec2 uMouse; uniform float uParallax; uniform vec3 uHorizonColor; uniform vec3 uWaveColor; uniform vec3 uCrestColor; out vec4 fragColor; const float MAX_DIST = 20000.0; float hash21(vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); } float plasma(vec3 r, vec2 freq, vec4 tc) { float mx = r.x + tc.x; mx += uSwell * sin((r.y + mx) / 20.0 + tc.y); float my = r.y - tc.z; my += uTurbulence * cos(r.x / 23.0 + tc.w); return r.z - (sin(mx * freq.x) * uAmplitude + sin(my * freq.y) * uAmplitude + uHeight); } float raymarch(vec3 pos, vec3 dir, vec2 freq, vec4 tc) { float dist = 0.0; for (int i = 0; i < 128; i++) { if (float(i) >= uSteps) break; float dscene = plasma(pos + dist * dir, freq, tc); if (abs(dscene) < 0.1) break; dist += 0.9 * dscene; if (!(abs(dist) < MAX_DIST)) return MAX_DIST; } return dist; } void main() { float T = iTime * uSpeed; vec2 freq = vec2(uWaveScale / 7.0, (uWaveScale * uWaveRatio) / 3.0); vec4 tc = vec4(T / 0.130, T / 0.810, T / 0.200, T / 0.710); float c, s; float vfov = (3.14159 / 2.3) / max(uZoom, 0.05); vec3 cam = vec3(0.0, 0.0, 30.0); vec2 uv = (gl_FragCoord.xy / iResolution.xy) - 0.5; uv.x *= iResolution.x / iResolution.y; uv.y *= -1.0; vec3 dir = vec3(0.0, 0.0, -1.0); float ulen = length(uv); float xrot = vfov * ulen; c = cos(xrot); s = sin(xrot); dir = mat3(1.0, 0.0, 0.0, 0.0, c, -s, 0.0, s, c) * dir; vec2 nuv = ulen > 1e-5 ? uv / ulen : vec2(1.0, 0.0); c = nuv.x; s = nuv.y; dir = mat3(c, -s, 0.0, s, c, 0.0, 0.0, 0.0, 1.0) * dir; c = cos(uTilt); s = sin(uTilt); dir = mat3(c, 0.0, s, 0.0, 1.0, 0.0, -s, 0.0, c) * dir; float yaw = (uMouse.x - 0.5) * uParallax * 0.4; float pitch = (uMouse.y - 0.5) * uParallax * 0.4; c = cos(yaw); s = sin(yaw); dir = mat3(c, 0.0, s, 0.0, 1.0, 0.0, -s, 0.0, c) * dir; c = cos(pitch); s = sin(pitch); dir = mat3(1.0, 0.0, 0.0, 0.0, c, -s, 0.0, s, c) * dir; float dist = raymarch(cam, dir, freq, tc); vec3 pos = cam + dist * dir; float t = clamp(uFogDepth / max(dist, 0.001), 0.0, 1.0); vec3 body = mix(uWaveColor, uCrestColor, clamp(pos.z * 0.08 + 0.5, 0.0, 1.0)); vec3 col = mix(uHorizonColor, body, t); col *= uBrightness; col = clamp(col, 0.0, 1.0); float alpha = clamp(t, 0.0, 1.0) * uOpacity; if (uGrain > 0.5) { float g = hash21(gl_FragCoord.xy + mod(iTime, 64.0) * 11.0); alpha += (g - 0.5) * uGrainIntensity; } fragColor = vec4(col * alpha, clamp(alpha, 0.0, 1.0)); }`;
     const containerWaves = document.getElementById('gradient-waves-container'); const waveRenderer = new Renderer({ webgl: 2, alpha: true, antialias: false }); const waveGl = waveRenderer.gl; waveGl.clearColor(0, 0, 0, 1); const canvasWaves = waveGl.canvas; canvasWaves.style.width = '100%'; canvasWaves.style.height = '100%'; canvasWaves.style.display = 'block'; containerWaves.appendChild(canvasWaves); const waveGeo = new Triangle(waveGl); const waveProg = new Program(waveGl, { vertex: waveVertex, fragment: waveFragment, uniforms: { iTime: { value: 0 }, iResolution: { value: new Float32Array([1, 1]) }, uSpeed: { value: config.speed }, uAmplitude: { value: config.amplitude }, uWaveScale: { value: config.waveScale }, uWaveRatio: { value: config.waveRatio }, uSwell: { value: config.swell }, uTurbulence: { value: config.turbulence }, uTilt: { value: config.tilt }, uZoom: { value: config.zoom }, uHeight: { value: config.height }, uFogDepth: { value: config.fogDepth }, uSteps: { value: config.detailSteps }, uBrightness: { value: config.brightness }, uOpacity: { value: config.opacity }, uGrain: { value: config.grain ? 1.0 : 0.0 }, uGrainIntensity: { value: config.grainIntensity }, uMouse: { value: new Float32Array([0.5, 0.5]) }, uParallax: { value: config.parallaxStrength }, uHorizonColor: { value: new Float32Array(hexToRgb(config.horizonColor)) }, uWaveColor: { value: new Float32Array(hexToRgb(config.waveColor)) }, uCrestColor: { value: new Float32Array(hexToRgb(config.crestColor)) } } }); const waveMesh = new Mesh(waveGl, { geometry: waveGeo, program: waveProg }); const setWaveSize = () => { const rect = containerWaves.getBoundingClientRect(); waveRenderer.setSize(rect.width, rect.height); waveProg.uniforms.iResolution.value = [waveGl.drawingBufferWidth, waveGl.drawingBufferHeight]; }; window.addEventListener('resize', setWaveSize); setWaveSize();
 
     // B. SPECULAR BUTTON
@@ -493,16 +642,11 @@
   <script>
     const masonryContainer = document.getElementById('masonry-container');
     const galleryItems = [
-      { id: 1, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 400 },
-      { id: 2, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 600 },
-      { id: 3, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 450 },
-      { id: 4, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 500 },
-      { id: 5, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 350 },
-      { id: 6, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 550 },
-      { id: 7, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 400 },
-      { id: 8, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 600 },
-      { id: 9, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 450 },
-      { id: 10, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 380 }
+      { id: 1, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 400 }, { id: 2, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 600 },
+      { id: 3, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 450 }, { id: 4, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 500 },
+      { id: 5, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 350 }, { id: 6, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 550 },
+      { id: 7, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 400 }, { id: 8, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 600 },
+      { id: 9, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 450 }, { id: 10, url: '#', img: 'https://files.catbox.moe/contohfoto.jpg', height: 380 }
     ];
     let currentColumns = 4;
     function calculateMasonry() {
@@ -537,138 +681,162 @@
   <!-- Script 7: MORPH SLIDER OGL LOGIC -->
   <script type="module">
     import { Renderer, Triangle, Program, Mesh, Texture } from 'ogl';
-
     const items = [
-      { image: 'https://files.catbox.moe/contohfoto.jpg', caption: 'Street Photography Jakarta' },
-      { image: 'https://files.catbox.moe/contohfoto.jpg', caption: 'UI/UX Savetime Studio' },
-      { image: 'https://files.catbox.moe/contohfoto.jpg', caption: 'Frontend Templates' },
-      { image: 'https://files.catbox.moe/contohfoto.jpg', caption: 'Desain Komunikasi Visual' }
+      { image: 'https://files.catbox.moe/contohfoto.jpg', caption: 'Street Photography Jakarta' }, { image: 'https://files.catbox.moe/contohfoto.jpg', caption: 'UI/UX Savetime Studio' },
+      { image: 'https://files.catbox.moe/contohfoto.jpg', caption: 'Frontend Templates' }, { image: 'https://files.catbox.moe/contohfoto.jpg', caption: 'Desain Komunikasi Visual' }
     ];
-
     const TRANSITIONS = { melt: 0, ripple: 1, shear: 2, swirl: 3 };
     const opts = { transition: 'melt', duration: 1.1, ease: 'power2.inOut', intensity: 0.55, scale: 2.4, aberration: 0.35, drift: 0.4, overlayColor: '#000000', loop: true };
-
     const vertexShader = `attribute vec2 position; attribute vec2 uv; varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position, 0.0, 1.0); }`;
     const fragmentShader = `precision highp float; uniform sampler2D tCurrent; uniform sampler2D tNext; uniform vec2 uResolution; uniform vec2 uCurrentSize; uniform vec2 uNextSize; uniform float uProgress; uniform float uDir; uniform int uMode; uniform float uIntensity; uniform float uScale; uniform float uAberration; uniform float uDrift; uniform float uTime; uniform float uReduce; uniform vec2 uPointer; uniform vec3 uOverlay; varying vec2 vUv; const float PI = 3.14159265359; float hash11(float p) { p = fract(p * 0.1031); p *= p + 33.33; p *= p + p; return fract(p); } float hash21(vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); } float noise(vec2 p) { vec2 i = floor(p); vec2 f = fract(p); vec2 u = f * f * (3.0 - 2.0 * f); float a = hash21(i); float b = hash21(i + vec2(1.0, 0.0)); float c = hash21(i + vec2(0.0, 1.0)); float d = hash21(i + vec2(1.0, 1.0)); return mix(mix(a, b, u.x), mix(c, d, u.x), u.y); } float fbm(vec2 p) { float v = 0.0; float a = 0.5; for (int i = 0; i < 5; i++) { v += a * noise(p); p *= 2.0; a *= 0.5; } return v; } mat2 rot(float a) { float s = sin(a); float c = cos(a); return mat2(c, -s, s, c); } vec2 coverUV(vec2 uv, vec2 res, vec2 img) { float rA = res.x / max(res.y, 1.0); float iA = img.x / max(img.y, 1.0); vec2 s = vec2(1.0); float ratio = rA / max(iA, 0.0001); if (ratio > 1.0) { s.y = 1.0 / ratio; } else { s.x = ratio; } return (uv - 0.5) * s + 0.5; } void main() { float p = clamp(uProgress, 0.0, 1.0); float env = sin(p * PI); vec2 uv = vUv; uv += vec2(sin(uTime * 0.25 + uv.y * 4.0), cos(uTime * 0.22 + uv.x * 4.0)) * uDrift * 0.008; uv = (uv - 0.5) * (1.0 - uDrift * 0.02 * sin(uTime * 0.4)) + 0.5; vec2 uvC = uv; vec2 uvN = uv; float m = smoothstep(0.0, 1.0, p); if (uReduce < 0.5) { if (uMode == 3) { vec2 c = uv - 0.5; float r = length(c); float ang = env * uIntensity * 3.5 * (1.0 - r); uvC = rot(ang) * c + 0.5; uvN = rot(-ang) * c + 0.5; m = smoothstep(0.0, 1.0, p); } else if (uMode == 1) { float d = distance(uv, uPointer); float ring = p * 1.6; float wave = sin((d - ring) * 30.0) * env; vec2 dir = normalize(uv - uPointer + 1e-4); vec2 disp = dir * wave * uIntensity * 0.25; uvC = uv + disp; uvN = uv + disp * 0.6; m = 1.0 - smoothstep(ring - 0.03, ring + 0.03, d); } else if (uMode == 2) { float slices = 14.0; float row = floor(uv.y * slices); float rnd = hash11(row); vec2 disp = vec2((rnd - 0.5) * env * uIntensity * 0.6, 0.0); uvC = uv + disp; uvN = uv + disp; float localX = uDir > 0.0 ? uv.x : 1.0 - uv.x; float th = p * 1.5 - 0.25 + (rnd - 0.5) * 0.25; m = 1.0 - smoothstep(th - 0.06, th + 0.06, localX); } else { float nn = fbm(uv * uScale + uTime * 0.03); float warp = fbm(uv * uScale * 1.7 - uTime * 0.02); vec2 g = vec2(nn, warp) - 0.5; uvC = uv + g * uIntensity * 0.5 * p; uvN = uv - g * uIntensity * 0.5 * (1.0 - p); m = smoothstep(nn - 0.15, nn + 0.15, p); } } vec2 sC = coverUV(uvC, uResolution, uCurrentSize); vec2 sN = coverUV(uvN, uResolution, uNextSize); float ca = uReduce < 0.5 ? uAberration * env * 0.03 : 0.0; vec3 colC = vec3(texture2D(tCurrent, sC + vec2(ca, 0.0)).r, texture2D(tCurrent, sC).g, texture2D(tCurrent, sC - vec2(ca, 0.0)).b); vec3 colN = vec3(texture2D(tNext, sN + vec2(ca, 0.0)).r, texture2D(tNext, sN).g, texture2D(tNext, sN - vec2(ca, 0.0)).b); vec3 col = mix(colC, colN, m); float vig = smoothstep(1.25, 0.25, length(uv - 0.5)); col = mix(col, uOverlay, (1.0 - vig) * 0.28); gl_FragColor = vec4(col, 1.0); }`;
-
-    function makeFallbackTexture(gl) {
-      const size = 4; const data = new Uint8Array(size * size * 4);
-      for (let i = 0; i < size * size; i++) { data[i * 4] = 24; data[i * 4 + 1] = 24; data[i * 4 + 2] = 28; data[i * 4 + 3] = 255; }
-      return new Texture(gl, { image: data, width: size, height: size, generateMipmaps: false });
-    }
-    function hexToRgb(hex) {
-      let h = (hex || '#000000').replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join('');
-      const n = parseInt(h, 16); return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255];
-    }
-
+    function makeFallbackTexture(gl) { const size = 4; const data = new Uint8Array(size * size * 4); for (let i = 0; i < size * size; i++) { data[i * 4] = 24; data[i * 4 + 1] = 24; data[i * 4 + 2] = 28; data[i * 4 + 3] = 255; } return new Texture(gl, { image: data, width: size, height: size, generateMipmaps: false }); }
+    function hexToRgb(hex) { let h = (hex || '#000000').replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join(''); const n = parseInt(h, 16); return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255]; }
     class MorphEngine {
       constructor(container) {
         this.container = container; this.current = 0; this.animating = false; this.dragging = false; this.dragDir = 0;
         this.renderer = new Renderer({ alpha: false, antialias: true, dpr: Math.min(window.devicePixelRatio || 1, 2) });
         this.gl = this.renderer.gl; this.gl.clearColor(0.05, 0.05, 0.06, 1);
         this.canvas = this.gl.canvas; this.canvas.className = 'morph-slider-canvas'; container.appendChild(this.canvas);
-        this.geometry = new Triangle(this.gl);
-        this.textures = items.map(() => makeFallbackTexture(this.gl));
-        this.sizes = items.map(() => [1, 1]);
-
-        this.program = new Program(this.gl, {
-          vertex: vertexShader, fragment: fragmentShader,
-          uniforms: {
-            tCurrent: { value: this.textures[0] }, tNext: { value: this.textures[0] }, uResolution: { value: [1, 1] }, uCurrentSize: { value: this.sizes[0] }, uNextSize: { value: this.sizes[0] },
-            uProgress: { value: 0 }, uDir: { value: 1 }, uMode: { value: TRANSITIONS[opts.transition] }, uIntensity: { value: opts.intensity }, uScale: { value: opts.scale },
-            uAberration: { value: opts.aberration }, uDrift: { value: opts.drift }, uTime: { value: 0 }, uReduce: { value: 0 }, uPointer: { value: [0.5, 0.5] }, uOverlay: { value: hexToRgb(opts.overlayColor) }
-          }
-        });
+        this.geometry = new Triangle(this.gl); this.textures = items.map(() => makeFallbackTexture(this.gl)); this.sizes = items.map(() => [1, 1]);
+        this.program = new Program(this.gl, { vertex: vertexShader, fragment: fragmentShader, uniforms: { tCurrent: { value: this.textures[0] }, tNext: { value: this.textures[0] }, uResolution: { value: [1, 1] }, uCurrentSize: { value: this.sizes[0] }, uNextSize: { value: this.sizes[0] }, uProgress: { value: 0 }, uDir: { value: 1 }, uMode: { value: TRANSITIONS[opts.transition] }, uIntensity: { value: opts.intensity }, uScale: { value: opts.scale }, uAberration: { value: opts.aberration }, uDrift: { value: opts.drift }, uTime: { value: 0 }, uReduce: { value: 0 }, uPointer: { value: [0.5, 0.5] }, uOverlay: { value: hexToRgb(opts.overlayColor) } } });
         this.mesh = new Mesh(this.gl, { geometry: this.geometry, program: this.program });
-        
-        window.addEventListener('resize', () => this.resize()); this.resize();
-        this.loadTextures();
-        this.loop = this.loop.bind(this); requestAnimationFrame(this.loop);
-        this.updateUI(0);
+        window.addEventListener('resize', () => this.resize()); this.resize(); this.loadTextures(); this.loop = this.loop.bind(this); requestAnimationFrame(this.loop); this.updateUI(0);
       }
-      loadTextures() {
-        items.forEach((item, index) => {
-          const img = new Image(); img.crossOrigin = 'anonymous'; img.src = item.image;
-          img.onload = () => {
-            const texture = new Texture(this.gl, { generateMipmaps: false }); texture.image = img;
-            this.textures[index] = texture; this.sizes[index] = [img.naturalWidth || 1, img.naturalHeight || 1];
-            if (index === this.current) { this.program.uniforms.tCurrent.value = texture; this.program.uniforms.uCurrentSize.value = this.sizes[index]; }
-          };
-        });
-      }
-      resize() {
-        const rect = this.container.getBoundingClientRect(); const w = Math.max(rect.width, 1); const h = Math.max(rect.height, 1);
-        this.renderer.setSize(w, h); this.program.uniforms.uResolution.value = [this.gl.canvas.width, this.gl.canvas.height];
-      }
-      loop(t) {
-        this.program.uniforms.uTime.value = t * 0.001; this.renderer.render({ scene: this.mesh }); requestAnimationFrame(this.loop);
-      }
+      loadTextures() { items.forEach((item, index) => { const img = new Image(); img.crossOrigin = 'anonymous'; img.src = item.image; img.onload = () => { const texture = new Texture(this.gl, { generateMipmaps: false }); texture.image = img; this.textures[index] = texture; this.sizes[index] = [img.naturalWidth || 1, img.naturalHeight || 1]; if (index === this.current) { this.program.uniforms.tCurrent.value = texture; this.program.uniforms.uCurrentSize.value = this.sizes[index]; } }; }); }
+      resize() { const rect = this.container.getBoundingClientRect(); const w = Math.max(rect.width, 1); const h = Math.max(rect.height, 1); this.renderer.setSize(w, h); this.program.uniforms.uResolution.value = [this.gl.canvas.width, this.gl.canvas.height]; }
+      loop(t) { this.program.uniforms.uTime.value = t * 0.001; this.renderer.render({ scene: this.mesh }); requestAnimationFrame(this.loop); }
       wrap(i) { const n = items.length; return ((i % n) + n) % n; }
-      prepareNext(dir) {
-        const target = this.wrap(this.current + dir);
-        this.program.uniforms.tCurrent.value = this.textures[this.current]; this.program.uniforms.uCurrentSize.value = this.sizes[this.current];
-        this.program.uniforms.tNext.value = this.textures[target]; this.program.uniforms.uNextSize.value = this.sizes[target];
-        this.program.uniforms.uDir.value = dir; return target;
-      }
-      goTo(dir) {
-        if (this.animating || this.dragging) return;
-        const target = this.prepareNext(dir); this.animating = true; this.updateUI(target);
-        gsap.fromTo(this.program.uniforms.uProgress, { value: 0 }, { value: 1, duration: opts.duration, ease: opts.ease, onComplete: () => this.commit(target) });
-      }
-      commit(target) {
-        this.current = target; this.program.uniforms.tCurrent.value = this.textures[target]; this.program.uniforms.uCurrentSize.value = this.sizes[target];
-        this.program.uniforms.uProgress.value = 0; this.animating = false;
-      }
+      prepareNext(dir) { const target = this.wrap(this.current + dir); this.program.uniforms.tCurrent.value = this.textures[this.current]; this.program.uniforms.uCurrentSize.value = this.sizes[this.current]; this.program.uniforms.tNext.value = this.textures[target]; this.program.uniforms.uNextSize.value = this.sizes[target]; this.program.uniforms.uDir.value = dir; return target; }
+      goTo(dir) { if (this.animating || this.dragging) return; const target = this.prepareNext(dir); this.animating = true; this.updateUI(target); gsap.fromTo(this.program.uniforms.uProgress, { value: 0 }, { value: 1, duration: opts.duration, ease: opts.ease, onComplete: () => this.commit(target) }); }
+      commit(target) { this.current = target; this.program.uniforms.tCurrent.value = this.textures[target]; this.program.uniforms.uCurrentSize.value = this.sizes[target]; this.program.uniforms.uProgress.value = 0; this.animating = false; }
       setPointer(x, y) { this.program.uniforms.uPointer.value = [x, y]; }
       beginDrag() { if (this.animating) return false; this.dragging = true; this.dragDir = 0; return true; }
-      drag(ndx) {
-        if (!this.dragging) return;
-        const dir = ndx < 0 ? 1 : -1;
-        if (dir !== this.dragDir) { this.dragDir = dir; this.prepareNext(dir); }
-        const progress = Math.min(Math.abs(ndx), 1); this.program.uniforms.uProgress.value = progress;
-        this.updateUI(progress > 0.5 ? this.wrap(this.current + dir) : this.current);
-      }
-      endDrag() {
-        if (!this.dragging) return; this.dragging = false;
-        const p = this.program.uniforms.uProgress.value; if (this.dragDir === 0) return;
-        const target = this.wrap(this.current + this.dragDir); this.animating = true;
-        if (p > 0.4) { this.updateUI(target); gsap.to(this.program.uniforms.uProgress, { value: 1, duration: 0.5, ease: 'power2.out', onComplete: () => this.commit(target) }); }
-        else { this.updateUI(this.current); gsap.to(this.program.uniforms.uProgress, { value: 0, duration: 0.5, ease: 'power2.out', onComplete: () => { this.animating = false; } }); }
-      }
-      updateUI(index) {
-        const captionContainer = document.getElementById('morph-caption');
-        captionContainer.innerHTML = `<span class="morph-slider-caption-text is-active">${items[index].caption}</span>`;
-        const dotsContainer = document.getElementById('morph-indicators');
-        Array.from(dotsContainer.children).forEach((dot, i) => dot.className = `morph-slider-dot ${i === index ? 'is-active' : ''}`);
-      }
+      drag(ndx) { if (!this.dragging) return; const dir = ndx < 0 ? 1 : -1; if (dir !== this.dragDir) { this.dragDir = dir; this.prepareNext(dir); } const progress = Math.min(Math.abs(ndx), 1); this.program.uniforms.uProgress.value = progress; this.updateUI(progress > 0.5 ? this.wrap(this.current + dir) : this.current); }
+      endDrag() { if (!this.dragging) return; this.dragging = false; const p = this.program.uniforms.uProgress.value; if (this.dragDir === 0) return; const target = this.wrap(this.current + this.dragDir); this.animating = true; if (p > 0.4) { this.updateUI(target); gsap.to(this.program.uniforms.uProgress, { value: 1, duration: 0.5, ease: 'power2.out', onComplete: () => this.commit(target) }); } else { this.updateUI(this.current); gsap.to(this.program.uniforms.uProgress, { value: 0, duration: 0.5, ease: 'power2.out', onComplete: () => { this.animating = false; } }); } }
+      updateUI(index) { const captionContainer = document.getElementById('morph-caption'); captionContainer.innerHTML = `<span class="morph-slider-caption-text is-active">${items[index].caption}</span>`; const dotsContainer = document.getElementById('morph-indicators'); Array.from(dotsContainer.children).forEach((dot, i) => dot.className = `morph-slider-dot ${i === index ? 'is-active' : ''}`); }
     }
-
-    const stage = document.getElementById('morph-stage');
-    const engine = new MorphEngine(stage);
-
-    // Bikin titik indikator navigasi (dots)
+    const stage = document.getElementById('morph-stage'); const engine = new MorphEngine(stage);
     const dotsContainer = document.getElementById('morph-indicators');
-    items.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.className = `morph-slider-dot ${i === 0 ? 'is-active' : ''}`;
-      dot.addEventListener('click', () => { if(i !== engine.current) engine.goTo(i > engine.current ? 1 : -1); });
-      dotsContainer.appendChild(dot);
-    });
-
-    // Kontrol Tombol Panah
-    document.getElementById('morph-next').addEventListener('click', () => engine.goTo(1));
-    document.getElementById('morph-prev').addEventListener('click', () => engine.goTo(-1));
-
-    // Kontrol Dragging (Geser Kursor)
+    items.forEach((_, i) => { const dot = document.createElement('button'); dot.className = `morph-slider-dot ${i === 0 ? 'is-active' : ''}`; dot.addEventListener('click', () => { if(i !== engine.current) engine.goTo(i > engine.current ? 1 : -1); }); dotsContainer.appendChild(dot); });
+    document.getElementById('morph-next').addEventListener('click', () => engine.goTo(1)); document.getElementById('morph-prev').addEventListener('click', () => engine.goTo(-1));
     let startX = 0; let sWidth = 1; let active = false;
-    stage.addEventListener('pointerdown', e => {
-      const rect = stage.getBoundingClientRect(); sWidth = rect.width || 1; startX = e.clientX;
-      engine.setPointer((e.clientX - rect.left) / rect.width, 1 - ((e.clientY - rect.top) / rect.height));
-      active = engine.beginDrag(); if(active && stage.setPointerCapture) stage.setPointerCapture(e.pointerId);
-    });
+    stage.addEventListener('pointerdown', e => { const rect = stage.getBoundingClientRect(); sWidth = rect.width || 1; startX = e.clientX; engine.setPointer((e.clientX - rect.left) / rect.width, 1 - ((e.clientY - rect.top) / rect.height)); active = engine.beginDrag(); if(active && stage.setPointerCapture) stage.setPointerCapture(e.pointerId); });
     stage.addEventListener('pointermove', e => { if(active) engine.drag((e.clientX - startX) / sWidth); });
     const onUp = () => { if(active){ active = false; engine.endDrag(); } };
     stage.addEventListener('pointerup', onUp); stage.addEventListener('pointercancel', onUp);
+  </script>
+
+  <!-- Script 8: FOLDER INTERACTIVE LOGIC -->
+  <script>
+    const folderEl = document.getElementById('interactive-folder');
+    const papers = [ document.getElementById('paper-1'), document.getElementById('paper-2'), document.getElementById('paper-3') ];
+    let isFolderOpen = false;
+
+    folderEl.addEventListener('click', () => {
+      isFolderOpen = !isFolderOpen;
+      if (isFolderOpen) { folderEl.classList.add('open'); folderEl.setAttribute('aria-expanded', 'true'); } 
+      else { folderEl.classList.remove('open'); folderEl.setAttribute('aria-expanded', 'false'); papers.forEach(p => { p.style.setProperty('--magnet-x', '0px'); p.style.setProperty('--magnet-y', '0px'); }); }
+    });
+
+    papers.forEach((paper) => {
+      paper.addEventListener('mousemove', (e) => {
+        if (!isFolderOpen) return;
+        const rect = paper.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2; const centerY = rect.top + rect.height / 2;
+        const offsetX = (e.clientX - centerX) * 0.15; const offsetY = (e.clientY - centerY) * 0.15;
+        paper.style.setProperty('--magnet-x', `${offsetX}px`); paper.style.setProperty('--magnet-y', `${offsetY}px`);
+      });
+      paper.addEventListener('mouseleave', () => { paper.style.setProperty('--magnet-x', '0px'); paper.style.setProperty('--magnet-y', '0px'); });
+    });
+    folderEl.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); folderEl.click(); } });
+  </script>
+
+  <!-- Script 9: CARD SWAP LOGIC -->
+  <script>
+    const swapContainer = document.getElementById('card-swap-container');
+    const swapCards = Array.from(swapContainer.querySelectorAll('.swap-card'));
+    let cardOrder = swapCards.map((_, i) => i);
+    const cardDistance = 60; const verticalDistance = 70; const delay = 3500; const skewAmount = 6;
+    let swapInterval; let swapTimeline; let isHoveringSwap = false;
+
+    function getSlot(i) { return { x: i * cardDistance, y: -i * verticalDistance, z: -i * cardDistance * 1.5, zIndex: swapCards.length - i }; }
+
+    swapCards.forEach((card, i) => {
+      const slot = getSlot(i);
+      gsap.set(card, { x: slot.x, y: slot.y, z: slot.z, xPercent: -50, yPercent: -50, skewY: skewAmount, transformOrigin: 'center center', zIndex: slot.zIndex, force3D: true });
+    });
+
+    function performSwap() {
+      if (cardOrder.length < 2) return;
+      const [frontIdx, ...restIdx] = cardOrder; const frontCard = swapCards[frontIdx];
+      swapTimeline = gsap.timeline();
+
+      swapTimeline.to(frontCard, { y: '+=500', duration: 0.8, ease: 'power1.inOut' });
+      swapTimeline.addLabel('promote', `-=0.36`);
+      restIdx.forEach((idx, i) => {
+        const card = swapCards[idx]; const slot = getSlot(i);
+        swapTimeline.set(card, { zIndex: slot.zIndex }, 'promote');
+        swapTimeline.to(card, { x: slot.x, y: slot.y, z: slot.z, duration: 0.8, ease: 'power1.inOut' }, `promote+=${i * 0.15}`);
+      });
+
+      const backSlot = getSlot(swapCards.length - 1);
+      swapTimeline.addLabel('return', `promote+=0.16`);
+      swapTimeline.call(() => { gsap.set(frontCard, { zIndex: backSlot.zIndex }); }, undefined, 'return');
+      swapTimeline.to(frontCard, { x: backSlot.x, y: backSlot.y, z: backSlot.z, duration: 0.8, ease: 'power1.inOut' }, 'return');
+      swapTimeline.call(() => { cardOrder = [...restIdx, frontIdx]; });
+    }
+
+    swapInterval = setInterval(performSwap, delay);
+
+    swapContainer.addEventListener('mouseenter', () => { isHoveringSwap = true; if (swapTimeline) swapTimeline.pause(); clearInterval(swapInterval); });
+    swapContainer.addEventListener('mouseleave', () => { isHoveringSwap = false; if (swapTimeline) swapTimeline.play(); swapInterval = setInterval(performSwap, delay); });
+    swapContainer.addEventListener('click', () => { if(!isHoveringSwap) return; if (swapTimeline && swapTimeline.isActive()) return; performSwap(); });
+  </script>
+
+  <!-- Script 10: BORDER GLOW FOOTER LOGIC -->
+  <script>
+    const glowCard = document.getElementById('border-glow-footer');
+
+    function getCenterOfElement(el) {
+      const rect = el.getBoundingClientRect();
+      return [rect.width / 2, rect.height / 2];
+    }
+
+    function getEdgeProximity(el, x, y) {
+      const [cx, cy] = getCenterOfElement(el);
+      const dx = x - cx; const dy = y - cy;
+      let kx = Infinity; let ky = Infinity;
+      if (dx !== 0) kx = cx / Math.abs(dx);
+      if (dy !== 0) ky = cy / Math.abs(dy);
+      return Math.min(Math.max(1 / Math.min(kx, ky), 0), 1);
+    }
+
+    function getCursorAngle(el, x, y) {
+      const [cx, cy] = getCenterOfElement(el);
+      const dx = x - cx; const dy = y - cy;
+      if (dx === 0 && dy === 0) return 0;
+      const radians = Math.atan2(dy, dx);
+      let degrees = radians * (180 / Math.PI) + 90;
+      if (degrees < 0) degrees += 360;
+      return degrees;
+    }
+
+    glowCard.addEventListener('pointermove', (e) => {
+      const rect = glowCard.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const edge = getEdgeProximity(glowCard, x, y);
+      const angle = getCursorAngle(glowCard, x, y);
+
+      glowCard.style.setProperty('--edge-proximity', `${(edge * 100).toFixed(3)}`);
+      glowCard.style.setProperty('--cursor-angle', `${angle.toFixed(3)}deg`);
+    });
+
+    // Kembalikan ke keadaan mati/redup saat kursor menjauh
+    glowCard.addEventListener('pointerleave', () => {
+      glowCard.style.setProperty('--edge-proximity', '0');
+    });
   </script>
 
 </body>
